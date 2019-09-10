@@ -1,0 +1,6 @@
+mix phx.gen.context Accounts User users first_name last_name
+mix phx.gen.context Accounts Registration registrations email encrypted_password user_id:references:users
+mix phx.gen.context Journals Journal journals name tags
+mix phx.gen.context Journals Entry entrys order:integer occurs:utc_datetime journal_id:references:journals tags
+mix phx.gen.context Reflections Prompt prompts order:integer label description:text type tags event_id:references:entrys
+mix phx.gen.context Reflections Reflection reflections value entry_id:references:entrys user_id:references:users prompt_id:references:prompts
