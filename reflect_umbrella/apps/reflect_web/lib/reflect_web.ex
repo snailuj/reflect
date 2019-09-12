@@ -22,6 +22,8 @@ defmodule ReflectWeb do
       use Phoenix.Controller, namespace: ReflectWeb
       import Plug.Conn
       import ReflectWeb.Gettext
+      # Give this function plug to all Controllers
+      import ReflectWeb.Auth, only: [authenticate_user: 2]
       alias ReflectWeb.Router.Helpers, as: Routes
     end
   end
@@ -49,6 +51,8 @@ defmodule ReflectWeb do
       use Phoenix.Router
       import Plug.Conn
       import Phoenix.Controller
+      # Make this function plug avail to the Router
+      import ReflectWeb.Auth, only: [authenticate_user: 2]
     end
   end
 

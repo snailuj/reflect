@@ -1,5 +1,7 @@
 defmodule ReflectWeb.Auth do
   import Plug.Conn
+  import Phoenix.Controller
+  alias ReflectWeb.Router.Helpers, as: Routes
 
   alias Reflect.Accounts
 
@@ -21,5 +23,18 @@ defmodule ReflectWeb.Auth do
 
   def logout(conn) do
     configure_session(conn, drop: true)
+  end
+
+  # function plug
+  def authenticate_user(conn, _opts) do
+    if conn.assigns.current_user do
+      conn
+    else
+      conn
+      # TODO gettext
+      |> put_flash(:error, "You must be logged in to access that page")
+      |> redirect(to: Routes.page_path(conn, :index))
+      |> halt()
+    end
   end
 end

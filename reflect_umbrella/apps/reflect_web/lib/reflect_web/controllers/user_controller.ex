@@ -4,7 +4,7 @@ defmodule ReflectWeb.UserController do
   alias Reflect.Accounts
   alias Reflect.Accounts.User
 
-  plug :authenticate when action in [:index, :show]
+  plug :authenticate_user when action in [:index, :show]
 
   def index(conn, _params) do
     if not conn.assigns.current_user.is_admin do
@@ -85,19 +85,6 @@ defmodule ReflectWeb.UserController do
         # todo report specific errors using Changeset.traverse_errors()
         |> put_flash(:error, "Something went wrong")
         |> redirect(to: Routes.user_path(conn, :index))
-    end
-  end
-
-  # function plug
-  defp authenticate(conn, _opts) do
-    if conn.assigns.current_user do
-      conn
-    else
-      conn
-      # TODO gettext
-      |> put_flash(:error, "You must be logged in to access that page")
-      |> redirect(to: Routes.page_path(conn, :index))
-      |> halt()
     end
   end
 end
