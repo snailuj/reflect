@@ -1,0 +1,26 @@
+<%= form_for @changeset, @route, [method: @method], fn f -> %>
+    <div>
+        <%= text_input f, :name, placeholder: "Name" %>
+        <%= error_tag f, :name %>
+    </div>
+    <div>
+        <%= text_input f, :email, placeholder: "Email address" %>
+        <%= error_tag f, :email %>
+    </div>
+    <div>
+        <%= password_input f, :password, placeholder: "Password" %>
+        <%= error_tag f, :password %>
+    </div>
+
+    <%= if @current_user && @current_user.is_admin do %>
+        <label>
+            <%= checkbox f, :is_admin %> Is Admin User
+        </label>
+    <% end %>
+
+    <%= if @changeset.data.id do %>
+        <%= submit "Save" %>
+    <% else %>
+        <%= submit "Register" %>
+    <% end %>
+<% end %>

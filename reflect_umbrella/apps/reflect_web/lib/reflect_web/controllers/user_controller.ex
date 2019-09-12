@@ -7,6 +7,13 @@ defmodule ReflectWeb.UserController do
   plug :authenticate when action in [:index, :show]
 
   def index(conn, _params) do
+    if not conn.assigns.current_user.is_admin do
+      conn
+      |> put_flash(:error, "You do not have permission to view that page")
+      |> redirect(to: Routes.page_path(conn, :index))
+      |> halt()
+    end
+
     users = Accounts.list_users()
     render(conn, "index.html", users: users)
   end
@@ -15,6 +22,37 @@ defmodule ReflectWeb.UserController do
   def show(conn, %{"id" => id}) do
     user = Accounts.get_user(id)
     render(conn, "show.html", user: user)
+  end
+
+  def edit(conn, %{"id" => id}) do
+    user = Accounts.get_user(id)
+
+    changeset =
+      cond do
+        conn.assigns.current_user.is_admin -> Accounts.change_admin(user)
+        conn.assigns.current_user.id == id -> Accounts.change_registration(user)
+      end
+
+    if changeset == nil do
+      conn
+      |> put_flash(:error, "You do not have permission to edit other users") # todo gettext
+      |> redirect(to: Routes.page_path(conn, :index))
+      |> halt()
+    end
+
+    render(conn, "edit.html", changeset: changeset)
+  end
+
+  def update(conn, %{"id" => user_id, "user" => user_params}) do
+    case Accounts.update_user(user_id, user_params) do
+      {:ok, user} ->
+        conn
+        |> IO.inspect()
+        |> put_flash(:info, "User #{user.name} updated") #todo gettext
+        |> redirect(to: Routes.user_path(conn, :index))
+      {:error, %Ecto.Changeset{} = changeset} ->
+        render(conn, "edit.html", changeset: changeset)
+    end
   end
 
   def new(conn, _params) do
@@ -27,10 +65,26 @@ defmodule ReflectWeb.UserController do
       {:ok, user} ->
         conn
         |> ReflectWeb.Auth.login(user)
-        |> put_flash(:info, "Welcome #{user.name}") # todo gettext
+        # todo gettext
+        |> put_flash(:info, "Welcome #{user.name}")
         |> redirect(to: Routes.page_path(conn, :index))
+
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "new.html", changeset: changeset)
+    end
+  end
+
+  def delete(conn, %{"id" => id}) do
+    case Accounts.delete_user(id) do
+      {:ok, user} ->
+        conn
+        |> put_flash(:info, "User #{user.name} deleted") # todo gettext
+        |> redirect(to: Routes.user_path(conn, :index))
+      {:error, %Ecto.Changeset{} = _errorset} ->
+        conn
+        # todo report specific errors using Changeset.traverse_errors()
+        |> put_flash(:error, "Something went wrong")
+        |> redirect(to: Routes.user_path(conn, :index))
     end
   end
 

@@ -15,6 +15,16 @@
             <%= if @current_user do %>
               <li><%= first_name(@current_user) %></li>
               <li>
+                <%= link "Edit Profile",
+                    to: Routes.user_path(@conn, :edit, @current_user.id) %>
+              </li>
+              <%= if @current_user.is_admin do %>
+                <li>
+                  <%= link "Users",
+                    to: Routes.user_path(@conn, :index) %>
+                </li>
+              <% end %>
+              <li>
                 <%= link "Log out", 
                     to: Routes.session_path(@conn, :delete, @current_user), 
                     method: "delete" %>

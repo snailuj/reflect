@@ -1,0 +1,7 @@
+<h1>Edit User</h1>
+
+<%= render "form.html", 
+    route: Routes.user_path(@conn, :update, @changeset.data.id),
+    method: "patch",
+    changeset: @changeset, 
+    current_user: @current_user %>

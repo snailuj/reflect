@@ -5,6 +5,7 @@ defmodule Reflect.Accounts.User do
   schema "users" do
     field :name, :string
     field :email, :string
+    field :is_admin, :boolean
     field :password, :string, virtual: true
     field :password_hash, :string
 
@@ -31,9 +32,16 @@ defmodule Reflect.Accounts.User do
       :password,
       ~r/(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])/,
       # TODO gettext
+      # TODO throws exception when fails?? Weird
       "must contain at least one lowercase letter, one uppercase letter and one number"
     )
     |> put_password_hash()
+  end
+
+  def admin_changeset(user, attrs \\ %{}) do
+    user
+    |> registration_changeset(attrs)
+    |> cast(attrs, [:is_admin])
   end
 
   def put_password_hash(changeset) do

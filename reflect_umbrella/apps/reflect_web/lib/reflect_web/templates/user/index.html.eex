@@ -4,7 +4,13 @@
     <%= for user <- @users do %>
         <tr>
             <td><%= user.name %> (<%= user.id %>)</td>
-            <td><%= link "View", to: Routes.user_path(@conn, :show, user.id) %>
+            <td>
+                <%= link "View", to: Routes.user_path(@conn, :show, user.id) %>
+                |
+                <%= link "Edit", to: Routes.user_path(@conn, :edit, user.id) %>
+                |
+                <%= link "Delete", to: Routes.user_path(@conn, :delete, user.id), method: "delete" %>
+            </td>
         </tr>
     <% end %>
 </table>

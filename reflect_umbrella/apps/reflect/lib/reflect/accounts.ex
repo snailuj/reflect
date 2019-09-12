@@ -19,12 +19,27 @@ defmodule Reflect.Accounts do
     |> Repo.insert()
   end
 
+  def update_user(id, attrs) do
+    get_user(id)
+    |> User.admin_changeset(attrs)
+    |> Repo.update()
+  end
+
+  def delete_user(id) do
+    get_user(id)
+    |> Repo.delete()
+  end
+
   def change_user(%User{} = user) do
     User.changeset(user)
   end
 
   def change_registration(%User{} = user, attrs \\ %{}) do
     User.registration_changeset(user, attrs)
+  end
+
+  def change_admin(%User{} = user, attrs \\ %{}) do
+    User.admin_changeset(user, attrs)
   end
 
   def authenticate_by_email_and_pass(email, given_pass) do
