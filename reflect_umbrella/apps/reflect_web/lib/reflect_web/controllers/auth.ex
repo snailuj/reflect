@@ -11,12 +11,12 @@ defmodule ReflectWeb.Auth do
     user_id = get_session(conn, :user_id)
     user = user_id && Accounts.get_user!(user_id)
 
-    assign(conn, :current_user, user)
+    put_current_user(conn, user)
   end
 
   def login(conn, user) do
     conn
-    |> assign(:current_user, user)
+    |> put_current_user(user)
     |> put_session(:user_id, user.id)
     |> configure_session(renew: true)
   end
@@ -25,16 +25,37 @@ defmodule ReflectWeb.Auth do
     configure_session(conn, drop: true)
   end
 
-  # function plug
-  def authenticate_user(conn, _opts) do
-    if conn.assigns.current_user do
+  def is_logged_in(conn = %{assigns: %{current_user: %Reflect.Accounts.User{}}}, _), do: conn
+
+  def is_logged_in(conn, _) do
+    conn
+    |> put_flash(:error, "You must be logged in to access that page") # todo gettext
+    |> redirect(to: Routes.page_path(conn, :index))
+    |> halt()
+  end
+
+  def is_admin(conn = %{assigns: %{is_admin: true}}, _), do: conn
+
+  def is_admin(conn, opts) do
+    if opts[:pokerface] do
       conn
-    else
-      conn
-      # TODO gettext
-      |> put_flash(:error, "You must be logged in to access that page")
-      |> redirect(to: Routes.page_path(conn, :index))
+      |> put_status(404)
+      |> render(ErrorView, :"404", message: "Page not found") # todo gettext
       |> halt()
     end
+
+    conn
+    |> put_flash(:error, "You do not have access to that page") # todo gettext
+    |> redirect(to: Routes.page_path(conn, :index))
+    |> halt()
+  end
+
+  def put_current_user(conn, user) do
+    conn
+    |> assign(:current_user, user)
+    |> assign(
+      :is_admin,
+      !!user && user.is_admin
+    )
   end
 end

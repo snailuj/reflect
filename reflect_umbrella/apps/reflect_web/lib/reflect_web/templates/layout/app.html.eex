@@ -18,7 +18,7 @@
                 <%= link "Edit Profile",
                     to: Routes.user_path(@conn, :edit, @current_user.id) %>
               </li>
-              <%= if @current_user.is_admin do %>
+              <%= if @is_admin do %>
                 <li>
                   <%= link "Users",
                     to: Routes.user_path(@conn, :index) %>

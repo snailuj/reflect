@@ -12,7 +12,7 @@
         <%= error_tag f, :password %>
     </div>
 
-    <%= if @current_user && @current_user.is_admin do %>
+    <%= if @current_user.is_admin do %>
         <label>
             <%= checkbox f, :is_admin %> Is Admin User
         </label>

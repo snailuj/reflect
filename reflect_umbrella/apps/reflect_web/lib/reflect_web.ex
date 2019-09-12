@@ -23,7 +23,7 @@ defmodule ReflectWeb do
       import Plug.Conn
       import ReflectWeb.Gettext
       # Give this function plug to all Controllers
-      import ReflectWeb.Auth, only: [authenticate_user: 2]
+      import ReflectWeb.Auth, only: [is_logged_in: 2, is_admin: 2]
       alias ReflectWeb.Router.Helpers, as: Routes
     end
   end
@@ -52,7 +52,7 @@ defmodule ReflectWeb do
       import Plug.Conn
       import Phoenix.Controller
       # Make this function plug avail to the Router
-      import ReflectWeb.Auth, only: [authenticate_user: 2]
+      import ReflectWeb.Auth, only: [is_logged_in: 2, is_admin: 2]
     end
   end
 

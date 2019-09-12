@@ -4,16 +4,10 @@ defmodule ReflectWeb.UserController do
   alias Reflect.Accounts
   alias Reflect.Accounts.User
 
-  plug :authenticate_user when action in [:index, :show]
+  plug :is_admin when action not in [:edit, :show]
+  plug :is_logged_in when action in [:edit, :show]
 
   def index(conn, _params) do
-    if not conn.assigns.current_user.is_admin do
-      conn
-      |> put_flash(:error, "You do not have permission to view that page")
-      |> redirect(to: Routes.page_path(conn, :index))
-      |> halt()
-    end
-
     users = Accounts.list_users()
     render(conn, "index.html", users: users)
   end
@@ -29,7 +23,7 @@ defmodule ReflectWeb.UserController do
 
     changeset =
       cond do
-        conn.assigns.current_user.is_admin -> Accounts.change_admin(user)
+        conn.assigns.is_admin -> Accounts.change_admin(user)
         conn.assigns.current_user.id == id -> Accounts.change_registration(user)
       end
 
