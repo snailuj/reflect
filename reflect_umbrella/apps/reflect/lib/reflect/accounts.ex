@@ -7,21 +7,27 @@ defmodule Reflect.Accounts do
   alias Reflect.Accounts
   alias Reflect.Accounts.User
 
-  def create_user(attrs) do
-    %User{}
-    |> User.changeset(attrs)
-    |> Repo.insert()
-  end
-
   def register_user(attrs) do
     %User{}
     |> User.registration_changeset(attrs)
     |> Repo.insert()
   end
 
-  def update_user(id, attrs) do
+  def create_user_admin(attrs) do
+    %User{}
+    |> User.admin_changeset(attrs)
+    |> Repo.insert()
+  end
+
+  def update_user_admin(id, attrs) do
     get_user(id)
     |> User.admin_changeset(attrs)
+    |> Repo.update()
+  end
+
+  def update_user_registration(id, attrs) do
+    get_user(id)
+    |> User.registration_changeset(attrs)
     |> Repo.update()
   end
 

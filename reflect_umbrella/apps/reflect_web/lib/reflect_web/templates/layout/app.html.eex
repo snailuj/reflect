@@ -4,7 +4,7 @@
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Reflect · Phoenix Framework</title>
+    <title>Reflect</title>
     <link rel="stylesheet" href="<%= Routes.static_path(@conn, "/css/app.css") %>"/>
   </head>
   <body>
@@ -15,13 +15,13 @@
             <%= if @current_user do %>
               <li><%= first_name(@current_user) %></li>
               <li>
-                <%= link "Edit Profile",
-                    to: Routes.user_path(@conn, :edit, @current_user.id) %>
+                <%= link "View Profile",
+                    to: Routes.user_path(@conn, :show, @current_user.id) %>
               </li>
               <%= if @is_admin do %>
                 <li>
                   <%= link "Users",
-                    to: Routes.user_path(@conn, :index) %>
+                    to: Routes.admin_user_path(@conn, :index) %>
                 </li>
               <% end %>
               <li>

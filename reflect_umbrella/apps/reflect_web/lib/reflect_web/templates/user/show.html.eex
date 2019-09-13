@@ -1,2 +1,6 @@
 <h1>Showing User</h1>
-<%= @user.name %> (<%= @user.id %>)
+<%= @user.name %> <br /><%= link @user.email, to: "mailto:#{@user.email}" %>
+
+<div style="padding-top: 15px">
+    <%= link "Edit Details", to: Routes.user_path(@conn, :edit, @user.id)%>
+</div>

@@ -1,0 +1,23 @@
+<h1>Users</h1>
+<table>
+    <%= for user <- @users do %>
+        <tr>
+            <td><%= user.name %> <br /><%= link user.email, to: "mailto:#{user.email}" %></td>
+            <td>
+                <%= link "View", to: Routes.admin_user_path(@conn, :show, user.id) %>
+                |
+                <%= link "Edit", to: Routes.admin_user_path(@conn, :edit, user.id) %>
+                |
+                <%= link "Delete", to: Routes.admin_user_path(@conn, :delete, user.id), method: "delete" %>
+            </td>
+        </tr>
+    <% end %>
+</table>
+
+<div>
+    <%= button "Create New User", to: Routes.admin_user_path(@conn, :new), method: "get" %>
+</div>
+
+<div style="color: grey; padding-top: 15px">
+    <em>View, Edit and Create New User can be moved into modals. Delete needs a confirmation.</em>
+</div>

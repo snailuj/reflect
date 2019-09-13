@@ -19,8 +19,14 @@ defmodule ReflectWeb.Router do
 
     get "/", PageController, :index
 
-    resources "/users", UserController
+    resources "/users", UserController, only: [:new, :create, :edit, :update, :show]
     resources "/sessions", SessionController, only: [:new, :create, :delete]
+  end
+
+  scope "/admin", ReflectWeb.Admin, as: :admin do
+    pipe_through [:browser, :is_admin]
+
+    resources "/users", UserController
   end
 
   # Other scopes may use custom stacks.

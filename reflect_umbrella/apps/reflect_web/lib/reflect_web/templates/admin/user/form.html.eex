@@ -11,6 +11,9 @@
         <%= password_input f, :password, placeholder: "Password" %>
         <%= error_tag f, :password %>
     </div>
+    <label>
+        <%= checkbox f, :is_admin %> Is Admin User
+    </label>
 
     <%= if @changeset.data.id do %>
         <%= submit "Save" %>

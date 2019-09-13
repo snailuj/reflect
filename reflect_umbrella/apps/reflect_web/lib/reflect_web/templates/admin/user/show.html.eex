@@ -1,0 +1,13 @@
+<h1>Showing User</h1>
+
+<div>
+    #<%= @user.id %>
+    <%= @user.name %> <em><%= if @user.is_admin, do: "(Admin User)" %></em>
+</div>
+<div>
+    <%= link @user.email, to: "mailto:#{@user.email}" %>
+</div>
+
+<div style="padding-top: 15px">
+    <%= link "Edit Details", to: Routes.admin_user_path(@conn, :edit, @user.id)%>
+</div>
