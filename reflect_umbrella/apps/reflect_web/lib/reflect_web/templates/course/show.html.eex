@@ -1,0 +1,37 @@
+<h1>Show Course</h1>
+
+<ul>
+
+  <li>
+    <strong>Name:</strong>
+    <%= @course.name %>
+  </li>
+
+  <li>
+    <strong>Short description:</strong>
+    <%= @course.short_description %>
+  </li>
+
+  <li>
+    <strong>Tags:</strong>
+    <%= @course.tags %>
+  </li>
+
+  <li>
+    <strong>Description:</strong>
+    <%= @course.description %>
+  </li>
+
+  <li>
+    <strong>Start date:</strong>
+    <%= @course.start_date %>
+  </li>
+
+  <li>
+    <strong>End date:</strong>
+    <%= @course.end_date %>
+  </li>
+
+</ul>
+
+<span><%= link "Back", to: Routes.course_path(@conn, :courses_for_user, @current_user.id) %></span>

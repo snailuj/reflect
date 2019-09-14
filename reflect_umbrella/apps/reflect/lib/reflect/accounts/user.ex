@@ -5,7 +5,7 @@ defmodule Reflect.Accounts.User do
   schema "users" do
     field :name, :string
     field :email, :string
-    field :is_admin, :boolean
+    field :is_admin, :boolean, default: false
     field :password, :string, virtual: true
     field :password_hash, :string
 

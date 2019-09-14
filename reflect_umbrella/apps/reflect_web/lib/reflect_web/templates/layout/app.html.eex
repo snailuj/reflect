@@ -23,6 +23,10 @@
                   <%= link "Users",
                     to: Routes.admin_user_path(@conn, :index) %>
                 </li>
+                <li>
+                  <%= link "Courses",
+                    to: Routes.admin_course_path(@conn, :index) %>
+                </li>
               <% end %>
               <li>
                 <%= link "Log out", 
