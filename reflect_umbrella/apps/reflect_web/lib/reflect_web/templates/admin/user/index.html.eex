@@ -16,9 +16,6 @@
                 <td><%= link user.email, to: "mailto:#{user.email}" %></td>
                 <td class="actions">
                 <span>
-                    <%= link "View", to: Routes.admin_user_path(@conn, :show, user.id) %>
-                </span>
-                <span>
                     <%= link "Edit", to: Routes.admin_user_path(@conn, :edit, user.id) %>
                 </span>
                 <span>

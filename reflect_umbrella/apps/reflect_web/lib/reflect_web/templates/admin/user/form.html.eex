@@ -1,13 +1,13 @@
 <%= form_for @changeset, @route, [method: @method], fn f -> %>
-    <div>
+    <div class="form-group">
         <%= text_input f, :name, placeholder: "Name" %>
         <%= error_tag f, :name %>
     </div>
-    <div>
+    <div class="form-group">
         <%= text_input f, :email, placeholder: "Email address" %>
         <%= error_tag f, :email %>
-    </div>
-    <div>
+    </div class="form-group">
+    <div class="form-group">
         <%= password_input f, :password, placeholder: "Password" %>
         <%= error_tag f, :password %>
     </div>
@@ -15,9 +15,9 @@
         <%= checkbox f, :is_admin %> Is Admin User
     </label>
 
-    <%= if @changeset.data.id do %>
-        <%= submit "Save", class: "primary" %>
-    <% else %>
-        <%= submit "Register" %>
-    <% end %>
+    <h2>Courses</h2>
+    <%= render ReflectWeb.Admin.CourseView, "list.html", conn: @conn, user: @user, courses: @user.courses %>
+    
+    <%= submit "Save", class: "primary" %>
+    <%= link "Back", to: Routes.admin_user_path(@conn, :index) %>
 <% end %>

@@ -1,6 +1,5 @@
 defmodule ReflectWeb.LayoutView do
   use ReflectWeb, :view
-
   def first_name(user) do
     user.name
     |> String.split(" ")

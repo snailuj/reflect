@@ -2,13 +2,17 @@ defmodule ReflectWeb.UserController do
   use ReflectWeb, :controller
 
   alias Reflect.Accounts
+  alias Reflect.Courses
   alias Reflect.Accounts.User
 
-  plug :is_logged_in
+  plug :is_logged_in, only: [:show, :edit, :update]
 
   @spec show(Plug.Conn.t(), map) :: Plug.Conn.t()
   def show(conn, %{"id" => id}) do
-    user = Accounts.get_user(id)
+    user =
+      Accounts.get_user(id)
+      |> Courses.load_courses()
+
     if user.id != conn.assigns.current_user.id do
       conn
       # todo gettext
@@ -22,6 +26,7 @@ defmodule ReflectWeb.UserController do
 
   def edit(conn, %{"id" => id}) do
     user = Accounts.get_user(id)
+
     if user.id != conn.assigns.current_user.id do
       conn.assigns.current_user.id |> IO.inspect(label: "JSJSJS")
 

@@ -1,6 +1,9 @@
-<h1>Showing User</h1>
+<h1>Your Profile</h1>
 <%= @user.name %> <br /><%= link @user.email, to: "mailto:#{@user.email}" %>
 
-<div style="padding-top: 15px">
+<h2>Your Courses</h2>
+<%= render ReflectWeb.CourseView, "list.html", conn: @conn, user: @user, courses: @user.courses %>
+
+<div>
     <%= link "Edit Details", to: Routes.user_path(@conn, :edit, @user.id)%>
 </div>

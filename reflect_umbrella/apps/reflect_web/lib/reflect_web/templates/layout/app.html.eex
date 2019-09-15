@@ -13,7 +13,7 @@
         <%= if @is_admin do %>
           <nav role="navigation" class="main flex">
             <ul class="flex flex-no-wrap items-end">
-              <li> 
+              <li>
                 <%= link "Users",
                   to: Routes.admin_user_path(@conn, :index) %>
               </li>
@@ -32,7 +32,7 @@
                 <%= link "View Profile",
                     to: Routes.user_path(@conn, :show, @current_user.id) %>
               </li>
-             <li>
+              <li>
                 <%= link "Log out", 
                     to: Routes.session_path(@conn, :delete, @current_user), 
                     method: "delete" %>
@@ -52,8 +52,9 @@
       </section>
     </header>
     <main role="main" class="mx-6 mt-6">
-      <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
-      <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
+      <%= component "notification.html", error: true, info: false, message: get_flash(@conn, :error) %>
+      <%= component "notification.html", info: true, error: true, message: get_flash(@conn, :info) %>
+
       <%= render @view_module, @view_template, assigns %>
     </main>
     <script type="text/javascript" src="<%= Routes.static_path(@conn, "/js/app.js") %>"></script>

@@ -3,9 +3,10 @@ defmodule Reflect.Courses.Membership do
   import Ecto.Changeset
 
   schema "memberships" do
-    field :user_id, :id
-    field :course_id, :id
     field :historic, :boolean, default: false
+
+    belongs_to :user, Reflect.Accounts.User
+    belongs_to :course, Reflect.Courses.Course
 
     timestamps()
   end
@@ -14,6 +15,5 @@ defmodule Reflect.Courses.Membership do
   def changeset(membership, attrs) do
     membership
     |> cast(attrs, [])
-    |> validate_required([])
   end
 end

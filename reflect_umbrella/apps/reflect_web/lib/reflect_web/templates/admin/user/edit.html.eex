@@ -3,4 +3,6 @@
 <%= render "form.html", 
     route: Routes.user_path(@conn, :update, @changeset.data.id),
     method: "patch",
+    conn: @conn,
+    user: @user,
     changeset: @changeset %>

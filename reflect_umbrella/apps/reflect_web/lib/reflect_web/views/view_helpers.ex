@@ -14,16 +14,16 @@ defmodule ReflectWeb.ViewHelpers do
     Form.datetime_select(form, field, [builder: &ViewHelpers.datetime_builder/1] ++ opts)
   end
 
-  def date_builder(builder) do
+  def date_builder(builder, date_label \\ "") do
     ~e"""
-      <%= builder.(:day, []) %> <%= builder.(:month, []) %> <%= builder.(:year, []) %>
+      <%= date_label %> <%= builder.(:day, []) %> <%= builder.(:month, []) %> <%= builder.(:year, []) %>
     """
   end
 
   def datetime_builder(builder) do
-    date_e = date_builder(builder)
+    date_e = date_builder(builder, "Date: ")
     time_e = ~e"""
-        <%= builder.(:hour, []) %> : <%= builder.(:minute, []) %>
+        Time: <%= builder.(:hour, []) %> : <%= builder.(:minute, []) %>
       """
 
     [date_e|time_e]

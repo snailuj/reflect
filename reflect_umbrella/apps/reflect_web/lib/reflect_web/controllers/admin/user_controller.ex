@@ -2,6 +2,7 @@ defmodule ReflectWeb.Admin.UserController do
   use ReflectWeb, :controller
 
   alias Reflect.Accounts
+  alias Reflect.Courses
   alias Reflect.Accounts.User
 
   @spec show(Plug.Conn.t(), map) :: Plug.Conn.t()
@@ -16,10 +17,13 @@ defmodule ReflectWeb.Admin.UserController do
   end
 
   def edit(conn, %{"id" => id}) do
-    user = Accounts.get_user(id)
+    user =
+      Accounts.get_user(id)
+      |> Courses.load_courses()
+
     changeset = Accounts.change_admin(user)
 
-    render(conn, "edit.html", changeset: changeset)
+    render(conn, "edit.html", changeset: changeset, user: user)
   end
 
   def update(conn, %{"id" => user_id, "user" => user_params}) do
@@ -68,6 +72,7 @@ defmodule ReflectWeb.Admin.UserController do
         |> halt()
 
       {:error, %Ecto.Changeset{} = changeset} ->
+        IO.inspect(changeset)
         render(conn, "new.html", changeset: changeset)
     end
   end

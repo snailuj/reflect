@@ -1,6 +1,9 @@
 <h1>New User</h1>
 
 <%= render "form.html",
-    route: Routes.user_path(@conn, :create),
+    route: Routes.admin_user_path(@conn, :create),
     method: "post",
+    conn: @conn,
     changeset: @changeset %>
+
+<span><%= link "Back", to: Routes.admin_user_path(@conn, :index) %></span>

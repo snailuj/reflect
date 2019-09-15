@@ -4,6 +4,9 @@ defmodule Reflect.Courses do
   """
 
   import Ecto.Query, warn: false
+
+  alias Ecto.Changeset
+
   alias Reflect.Repo
 
   alias Reflect.Courses.Course
@@ -19,6 +22,11 @@ defmodule Reflect.Courses do
   """
   def list_courses do
     Repo.all(Course)
+  end
+
+  def load_courses(user) do
+    user
+    |> Repo.preload(:courses)
   end
 
   @doc """
@@ -145,9 +153,11 @@ defmodule Reflect.Courses do
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_membership(attrs \\ %{}) do
+  def create_membership(user, course) do
     %Membership{}
-    |> Membership.changeset(attrs)
+    |> Membership.changeset()
+    |> Changeset.put_assoc(:user, user)
+    |> Changeset.put_assoc(:course, course)
     |> Repo.insert()
   end
 
@@ -170,7 +180,7 @@ defmodule Reflect.Courses do
   end
 
   @doc """
-  Deletes a Membership.
+  Makes a Membership historic.
 
   ## Examples
 
@@ -182,7 +192,7 @@ defmodule Reflect.Courses do
 
   """
   def delete_membership(%Membership{} = membership) do
-    Repo.delete(membership)
+    update_membership(membership, %{historic: false})
   end
 
   @doc """

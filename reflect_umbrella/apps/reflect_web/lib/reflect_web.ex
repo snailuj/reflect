@@ -44,6 +44,7 @@ defmodule ReflectWeb do
       import ReflectWeb.Gettext
       alias ReflectWeb.Router.Helpers, as: Routes
       alias ReflectWeb.ViewHelpers, as: Helpers
+      import ReflectWeb.ComponentHelpers
     end
   end
 

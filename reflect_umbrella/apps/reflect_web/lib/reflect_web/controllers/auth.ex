@@ -29,6 +29,7 @@ defmodule ReflectWeb.Auth do
 
   def is_logged_in(conn, _) do
     conn
+    |> IO.inspect()
     |> put_flash(:error, "You must be logged in to access that page") # todo gettext
     |> redirect(to: Routes.session_path(conn, :new))
     |> halt()

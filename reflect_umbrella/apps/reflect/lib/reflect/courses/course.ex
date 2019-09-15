@@ -10,6 +10,8 @@ defmodule Reflect.Courses.Course do
     field :start_date, :utc_datetime
     field :tags, :string
 
+    many_to_many :users, Reflect.Accounts.User, join_through: Reflect.Courses.Membership
+
     timestamps()
   end
 
