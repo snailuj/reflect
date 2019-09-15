@@ -4,11 +4,9 @@
   <thead>
     <tr>
       <th>Name</th>
-      <th>Short description</th>
       <th>Tags</th>
-      <th>Description</th>
-      <th>Start date</th>
-      <th>End date</th>
+      <th>Start</th>
+      <th>End</th>
 
       <th></th>
     </tr>
@@ -16,14 +14,12 @@
   <tbody>
 <%= for course <- @courses do %>
     <tr>
-      <td><%= course.name %></td>
-      <td><%= course.short_description %></td>
+      <td title="<%= course.short_description %>"><%= course.name %></td>
       <td><%= course.tags %></td>
-      <td><%= course.description %></td>
-      <td><%= course.start_date %></td>
-      <td><%= course.end_date %></td>
+      <td><%= Helpers.date_render(course.start_date) %></td>
+      <td><%= Helpers.date_render(course.end_date) %></td>
 
-      <td>
+      <td class="actions">
         <span><%= link "Show", to: Routes.admin_course_path(@conn, :show, course) %></span>
         <span><%= link "Edit", to: Routes.admin_course_path(@conn, :edit, course) %></span>
         <span><%= link "Delete", to: Routes.admin_course_path(@conn, :delete, course), method: :delete, data: [confirm: "Are you sure?"] %></span>

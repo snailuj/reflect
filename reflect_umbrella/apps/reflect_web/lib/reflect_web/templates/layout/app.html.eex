@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="text-gray-800 antialiased leading-tight">
   <head>
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -7,10 +7,24 @@
     <title>Reflect</title>
     <link rel="stylesheet" href="<%= Routes.static_path(@conn, "/css/app.css") %>"/>
   </head>
-  <body>
-    <header>
-      <section class="container">
-        <nav role="navigation">
+  <body class="container mx-auto mt-6">
+    <header class="mx-6">
+      <section class="flex justify-between">
+        <%= if @is_admin do %>
+          <nav role="navigation" class="main flex">
+            <ul class="flex flex-no-wrap items-end">
+              <li> 
+                <%= link "Users",
+                  to: Routes.admin_user_path(@conn, :index) %>
+              </li>
+              <li class="pl-1">
+                <%= link "Courses",
+                  to: Routes.admin_course_path(@conn, :index) %>
+              </li>
+            </ul>
+          </nav>
+        <% end %>
+        <nav role="navigation" class="flex text-right">
           <ul>
             <%= if @current_user do %>
               <li><%= first_name(@current_user) %></li>
@@ -18,17 +32,7 @@
                 <%= link "View Profile",
                     to: Routes.user_path(@conn, :show, @current_user.id) %>
               </li>
-              <%= if @is_admin do %>
-                <li>
-                  <%= link "Users",
-                    to: Routes.admin_user_path(@conn, :index) %>
-                </li>
-                <li>
-                  <%= link "Courses",
-                    to: Routes.admin_course_path(@conn, :index) %>
-                </li>
-              <% end %>
-              <li>
+             <li>
                 <%= link "Log out", 
                     to: Routes.session_path(@conn, :delete, @current_user), 
                     method: "delete" %>
@@ -47,7 +51,7 @@
         </nav>
       </section>
     </header>
-    <main role="main" class="container">
+    <main role="main" class="mx-6 mt-6">
       <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
       <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
       <%= render @view_module, @view_template, assigns %>

@@ -1,21 +1,37 @@
 <h1>Users</h1>
-<table>
-    <%= for user <- @users do %>
-        <tr>
-            <td><%= user.name %> <br /><%= link user.email, to: "mailto:#{user.email}" %></td>
-            <td>
-                <%= link "View", to: Routes.admin_user_path(@conn, :show, user.id) %>
-                |
-                <%= link "Edit", to: Routes.admin_user_path(@conn, :edit, user.id) %>
-                |
-                <%= link "Delete", to: Routes.admin_user_path(@conn, :delete, user.id), method: "delete" %>
-            </td>
-        </tr>
-    <% end %>
-</table>
+<div class="overflow-x-auto">
+    <table>
+        <thead>
+            <tr>
+            <th>Name</th>
+            <th>Email</th>
 
+            <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <%= for user <- @users do %>
+            <tr>
+                <td><%= user.name %></td>
+                <td><%= link user.email, to: "mailto:#{user.email}" %></td>
+                <td class="actions">
+                <span>
+                    <%= link "View", to: Routes.admin_user_path(@conn, :show, user.id) %>
+                </span>
+                <span>
+                    <%= link "Edit", to: Routes.admin_user_path(@conn, :edit, user.id) %>
+                </span>
+                <span>
+                    <%= link "Delete", to: Routes.admin_user_path(@conn, :delete, user.id), method: "delete" %>
+                </span>
+                </td>
+            </tr>
+            <% end %>
+        </tbody>
+    </table>
+</div>
 <div>
-    <%= button "Create New User", to: Routes.admin_user_path(@conn, :new), method: "get" %>
+    <%= link "Create New User", to: Routes.admin_user_path(@conn, :new), method: "get" %>
 </div>
 
 <div style="color: grey; padding-top: 15px">

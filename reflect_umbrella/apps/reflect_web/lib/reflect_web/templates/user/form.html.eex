@@ -13,7 +13,7 @@
     </div>
 
     <%= if @changeset.data.id do %>
-        <%= submit "Save" %>
+        <%= submit "Save", class: "primary" %>
     <% else %>
         <%= submit "Register" %>
     <% end %>
