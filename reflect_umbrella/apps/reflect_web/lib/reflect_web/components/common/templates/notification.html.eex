@@ -1,12 +1,12 @@
-<%= if @error && @message != nil do %>
+<%= if get_flash(@conn, :error) do %>
   <p class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 my-4 rounded relative"
      role="alert">
-     <%= @message %>
+     <%= get_flash(@conn, :error) %>
   </p>
 <% end %>
-<%= if @info && @message != nil do %>
+<%= if get_flash(@conn, :info) do %>
   <p class="bg-blue-100 border border-blue-400 text-blue-700 px-4 py-3 my-4 rounded relative"
      role="alert">
-    <%= @message %>
+    <%= get_flash(@conn, :info) %>
   </p>
 <% end %>

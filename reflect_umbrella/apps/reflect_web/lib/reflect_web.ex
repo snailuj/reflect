@@ -44,7 +44,7 @@ defmodule ReflectWeb do
       import ReflectWeb.Gettext
       alias ReflectWeb.Router.Helpers, as: Routes
       alias ReflectWeb.ViewHelpers, as: Helpers
-      import ReflectWeb.ComponentHelpers
+      import ReflectWeb.Components.ComponentHelpers
     end
   end
 
@@ -62,6 +62,14 @@ defmodule ReflectWeb do
     quote do
       use Phoenix.Channel
       import ReflectWeb.Gettext
+    end
+  end
+
+  def component do
+    quote do
+      use ReflectWeb, :view
+
+      @phoenix_root "lib/reflect_web/components/#{@view_resource}/templates"
     end
   end
 

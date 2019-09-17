@@ -52,9 +52,7 @@
       </section>
     </header>
     <main role="main" class="mx-6 mt-6">
-      <%= component "notification.html", error: true, info: false, message: get_flash(@conn, :error) %>
-      <%= component "notification.html", info: true, error: true, message: get_flash(@conn, :info) %>
-
+      <%= common :notification, assigns %>
       <%= render @view_module, @view_template, assigns %>
     </main>
     <script type="text/javascript" src="<%= Routes.static_path(@conn, "/js/app.js") %>"></script>
