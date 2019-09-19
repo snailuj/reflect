@@ -8,11 +8,11 @@ defmodule Reflect.Repo.Migrations.CreatePrompts do
       add :description, :text
       add :type, :string
       add :tags, :string
-      add :event_id, references(:entrys, on_delete: :nothing)
+      add :entry_id, references(:entrys, on_delete: :nothing)
 
       timestamps()
     end
 
-    create index(:prompts, [:event_id])
+    create index(:prompts, [:entry_id])
   end
 end
