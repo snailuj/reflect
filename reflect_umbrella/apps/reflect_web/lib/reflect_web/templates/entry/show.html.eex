@@ -1,0 +1,28 @@
+<h1>Show Entry</h1>
+
+<ul>
+
+  <li>
+    <strong>Title:</strong>
+    <%= @entry.title %>
+  </li>
+
+  <li>
+    <strong>Order:</strong>
+    <%= @entry.order %>
+  </li>
+
+  <li>
+    <strong>Occurs:</strong>
+    <%= @entry.occurs %>
+  </li>
+
+  <li>
+    <strong>Tags:</strong>
+    <%= @entry.tags %>
+  </li>
+
+</ul>
+
+<span><%= link "Edit", to: Routes.entry_path(@conn, :edit, @entry) %></span>
+<span><%= link "Back", to: Routes.entry_path(@conn, :index) %></span>

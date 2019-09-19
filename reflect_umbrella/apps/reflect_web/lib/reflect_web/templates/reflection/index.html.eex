@@ -1,0 +1,26 @@
+<h1>Listing Reflections</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Value</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for reflection <- @reflections do %>
+    <tr>
+      <td><%= reflection.value %></td>
+
+      <td>
+        <span><%= link "Show", to: Routes.reflection_path(@conn, :show, reflection) %></span>
+        <span><%= link "Edit", to: Routes.reflection_path(@conn, :edit, reflection) %></span>
+        <span><%= link "Delete", to: Routes.reflection_path(@conn, :delete, reflection), method: :delete, data: [confirm: "Are you sure?"] %></span>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<span><%= link "New Reflection", to: Routes.reflection_path(@conn, :new) %></span>

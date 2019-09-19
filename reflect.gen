@@ -1,6 +1,6 @@
 #mix phx.gen.html Courses Course courses name description short_description tags start_date:utc_datetime end_date:utc_datetime
 #mix phx.gen.html Courses Membership memberships user_id:references:users course_id:references:courses
 mix phx.gen.html Journals Journal journals name tags course_id:references:courses
-mix phx.gen.html Journals Entry entrys order:integer occurs:utc_datetime journal_id:references:journals tags
+mix phx.gen.html Journals Entry entrys title order:integer occurs:utc_datetime journal_id:references:journals tags
 mix phx.gen.html Reflections Prompt prompts order:integer label description:text type tags event_id:references:entrys
-mix phx.gen.html Reflections Reflection reflections value entry_id:references:entrys user_id:references:users prompt_id:references:prompts
+mix phx.gen.html Reflections Reflection reflections value user_id:references:users prompt_id:references:prompts

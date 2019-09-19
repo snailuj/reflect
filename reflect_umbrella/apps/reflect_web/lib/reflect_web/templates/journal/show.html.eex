@@ -1,0 +1,18 @@
+<h1>Show Journal</h1>
+
+<ul>
+
+  <li>
+    <strong>Name:</strong>
+    <%= @journal.name %>
+  </li>
+
+  <li>
+    <strong>Tags:</strong>
+    <%= @journal.tags %>
+  </li>
+
+</ul>
+
+<span><%= link "Edit", to: Routes.journal_path(@conn, :edit, @journal) %></span>
+<span><%= link "Back", to: Routes.journal_path(@conn, :index) %></span>

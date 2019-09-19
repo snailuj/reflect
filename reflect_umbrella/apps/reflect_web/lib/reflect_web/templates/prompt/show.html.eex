@@ -1,0 +1,33 @@
+<h1>Show Prompt</h1>
+
+<ul>
+
+  <li>
+    <strong>Order:</strong>
+    <%= @prompt.order %>
+  </li>
+
+  <li>
+    <strong>Label:</strong>
+    <%= @prompt.label %>
+  </li>
+
+  <li>
+    <strong>Description:</strong>
+    <%= @prompt.description %>
+  </li>
+
+  <li>
+    <strong>Type:</strong>
+    <%= @prompt.type %>
+  </li>
+
+  <li>
+    <strong>Tags:</strong>
+    <%= @prompt.tags %>
+  </li>
+
+</ul>
+
+<span><%= link "Edit", to: Routes.prompt_path(@conn, :edit, @prompt) %></span>
+<span><%= link "Back", to: Routes.prompt_path(@conn, :index) %></span>
