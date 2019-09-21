@@ -1,0 +1,27 @@
+<div class="overflow-x-auto my-4">
+  <%= if length(@courses) == 0 do %>
+    <div>No courses</div>
+  <% else %>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Short description</th>
+          <th>Start</th>
+          <th>End</th>
+        </tr>
+      </thead>
+      <tbody>
+        <%= for course <- @courses do %>
+          <tr>
+            <td><%= course.name %></td>
+            <td><%= course.short_description %>
+            <td><%= Helpers.date_render(course.start_date) %></td>
+            <td><%= Helpers.date_render(course.end_date) %></td>
+         </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+<% end %>
+</div>

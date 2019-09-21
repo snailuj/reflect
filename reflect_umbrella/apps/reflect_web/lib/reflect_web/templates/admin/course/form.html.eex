@@ -39,5 +39,6 @@
 
   <div>
     <%= submit "Save", class: "primary" %>
+    <span><%= link "Back", to: Routes.admin_course_path(@conn, :index) %></span>
   </div>
 <% end %>

@@ -21,6 +21,8 @@ defmodule Reflect.Reflections do
     Repo.all(Prompt)
   end
 
+  def load_prompts(entry), do: Repo.preload(entry, Prompt)
+
   @doc """
   Gets a single prompt.
 

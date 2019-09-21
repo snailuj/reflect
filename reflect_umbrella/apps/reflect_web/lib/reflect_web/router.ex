@@ -33,6 +33,16 @@ defmodule ReflectWeb.Router do
     resources "/membership", MembershipController
   end
 
+  scope "/reflect", ReflectWeb.Reflect, as: :reflect do
+    pipe_through [:browser, :is_logged_in]
+
+    # view reflections on given journal
+    get "/journal/:id", JournalController, :show
+
+    # go straight to edit reflection on given journal for given date
+    get "/journal/:id/edit/:date", JournalController, :edit_date
+  end
+
   # Other scopes may use custom stacks.
   # scope "/api", ReflectWeb do
   #   pipe_through :api

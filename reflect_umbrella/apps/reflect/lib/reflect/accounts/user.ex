@@ -10,6 +10,7 @@ defmodule Reflect.Accounts.User do
     field :password_hash, :string
 
     many_to_many :courses, Reflect.Courses.Course, join_through: Reflect.Courses.Membership
+    has_many :reflections, Reflect.Reflections.Reflection
 
     timestamps()
   end

@@ -21,6 +21,34 @@ defmodule Reflect.Journals do
     Repo.all(Journal)
   end
 
+  def load_journals(course), do: Repo.preload(course, :journals)
+
+  @spec load_entrys(nil | [%{optional(atom) => any}] | %{optional(atom) => any}) ::
+          nil | [%{optional(atom) => any}] | %{optional(atom) => any}
+  def load_entrys(journal), do: Repo.preload(journal, :entrys)
+
+  @doc """
+    Digs right down to the bottom of a journal, pulling not just journal entrys
+    and prompts, but into the given user's reflections as well if any
+
+    Preloads entrys, prompts and reflections
+
+    If the user has no reflections for this journal, each `reflections` assoc
+    inside a given `prompt` will be an empty list.
+  """
+  def load_full_journal(journal_id, user) do
+    Repo.one(
+      from j in Journal,
+        join: e in assoc(j, :entrys),
+        join: p in assoc(e, :prompts),
+        left_join: r in assoc(p, :reflections),
+        left_join: u in assoc(r, :user),
+        where: (u.id == ^user.id or is_nil(u.id))
+                and j.id == ^journal_id,
+        preload: [entrys: {e, prompts: {p, reflections: r}}]
+    )
+  end
+
   @doc """
   Gets a single journal.
 

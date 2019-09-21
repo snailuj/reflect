@@ -2,10 +2,14 @@ defmodule Reflect.Reflections.Reflection do
   use Ecto.Schema
   import Ecto.Changeset
 
+  alias Reflect.Accounts.User
+  alias Reflect.Reflections.Prompt
+
   schema "reflections" do
     field :value, :string
-    field :user_id, :id
-    field :prompt_id, :id
+
+    belongs_to :user, User
+    belongs_to :prompt, Prompt
 
     timestamps()
   end

@@ -1,0 +1,31 @@
+<h1><%= @journal.course.name %></h1>
+<% answered_entrys = @journal.entrys |> Enum.filter(fn e -> e.prompts |> Enum.any?(fn p -> Enum.count(p.reflections) > 0 end) end) %>
+<% todays_entry = @journal.entrys |> Enum.at(Enum.count(answered_entrys)) %>
+
+<div>
+  <h2>Today's Entry: <%= todays_entry.title %></h2>
+  <%= for prompt <- todays_entry.prompts do %>
+    <div class="form-group flex w-5/6 justify-between">
+      <div><%= prompt.label %></div>
+      <div></div> 
+    </div>
+  <% end %>
+</div>
+
+<div>
+  <h2>Earlier Entries</h2>
+  <%= for entry <- answered_entrys do %>
+    <div>
+      <% answered = entry.prompts |> Enum.filter(fn p -> Enum.count(p.reflections) > 0 end) %>
+      <h3><%= entry.title %></h3>
+      <%= for prompt <- answered do %>
+        <%= for reflection <- prompt.reflections do %>
+          <div class="form-group flex w-5/6 justify-between">
+            <div><%= prompt.label %> </div>
+            <div><%= render_reflection(prompt, reflection) %></div>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+  <% end %>
+</div>

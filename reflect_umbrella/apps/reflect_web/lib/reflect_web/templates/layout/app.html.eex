@@ -14,11 +14,11 @@
           <nav role="navigation" class="main flex">
             <ul class="flex flex-no-wrap items-end">
               <li>
-                <%= link "Users",
+                <%= link "Edit Users",
                   to: Routes.admin_user_path(@conn, :index) %>
               </li>
               <li class="pl-1">
-                <%= link "Courses",
+                <%= link "Edit Courses",
                   to: Routes.admin_course_path(@conn, :index) %>
               </li>
             </ul>

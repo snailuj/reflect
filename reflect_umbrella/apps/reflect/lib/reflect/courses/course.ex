@@ -2,6 +2,10 @@ defmodule Reflect.Courses.Course do
   use Ecto.Schema
   import Ecto.Changeset
 
+  alias Reflect.Accounts.User
+  alias Reflect.Courses.Membership
+  alias Reflect.Journals.Journal
+
   schema "courses" do
     field :description, :string
     field :end_date, :utc_datetime
@@ -10,7 +14,8 @@ defmodule Reflect.Courses.Course do
     field :start_date, :utc_datetime
     field :tags, :string
 
-    many_to_many :users, Reflect.Accounts.User, join_through: Reflect.Courses.Membership
+    many_to_many :users, User, join_through: Membership
+    has_many :journals, Journal
 
     timestamps()
   end

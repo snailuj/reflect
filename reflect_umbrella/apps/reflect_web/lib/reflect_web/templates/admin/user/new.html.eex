@@ -4,6 +4,5 @@
     route: Routes.admin_user_path(@conn, :create),
     method: "post",
     conn: @conn,
+    user: nil,
     changeset: @changeset %>
-
-<span><%= link "Back", to: Routes.admin_user_path(@conn, :index) %></span>

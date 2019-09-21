@@ -5,7 +5,7 @@ defmodule ReflectWeb.UserController do
   alias Reflect.Courses
   alias Reflect.Accounts.User
 
-  plug :is_logged_in, only: [:show, :edit, :update]
+  plug :is_logged_in, nil when action in [:show, :edit, :update]
 
   @spec show(Plug.Conn.t(), map) :: Plug.Conn.t()
   def show(conn, %{"id" => id}) do

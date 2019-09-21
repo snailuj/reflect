@@ -29,6 +29,11 @@ defmodule Reflect.Courses do
     |> Repo.preload(:courses)
   end
 
+  def load_course(journal) do
+    journal
+    |> Repo.preload(:course)
+  end
+
   @doc """
   Gets a single course.
 
@@ -45,6 +50,7 @@ defmodule Reflect.Courses do
   """
   def get_course!(id), do: Repo.get!(Course, id)
 
+  def get_course_by(params), do: Repo.get_by(Course, params)
   @doc """
   Creates a course.
 

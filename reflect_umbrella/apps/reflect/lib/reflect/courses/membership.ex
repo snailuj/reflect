@@ -12,7 +12,7 @@ defmodule Reflect.Courses.Membership do
   end
 
   @doc false
-  def changeset(membership, attrs) do
+  def changeset(membership, attrs \\ %{}) do
     membership
     |> cast(attrs, [])
   end

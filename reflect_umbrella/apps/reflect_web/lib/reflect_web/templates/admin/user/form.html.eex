@@ -15,9 +15,10 @@
         <%= checkbox f, :is_admin %> Is Admin User
     </label>
 
-    <h2>Courses</h2>
-    <%= render ReflectWeb.Admin.CourseView, "list.html", conn: @conn, user: @user, courses: @user.courses %>
-    
+    <%= if @user do %>
+        <h2>Courses</h2>
+        <%= render ReflectWeb.Admin.CourseView, "list.html", conn: @conn, user: @user, courses: @user.courses %>
+    <% end %>
     <%= submit "Save", class: "primary" %>
     <%= link "Back", to: Routes.admin_user_path(@conn, :index) %>
 <% end %>

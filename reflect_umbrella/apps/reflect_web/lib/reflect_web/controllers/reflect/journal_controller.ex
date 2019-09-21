@@ -1,6 +1,7 @@
-defmodule ReflectWeb.JournalController do
+defmodule ReflectWeb.Reflect.JournalController do
   use ReflectWeb, :controller
 
+  alias Reflect.Courses
   alias Reflect.Journals
   alias Reflect.Journals.Journal
 
@@ -27,8 +28,13 @@ defmodule ReflectWeb.JournalController do
   end
 
   def show(conn, %{"id" => id}) do
-    journal = Journals.get_journal!(id)
-    render(conn, "show.html", journal: journal)
+    journal =
+      Journals.load_full_journal(String.to_integer(id), conn.assigns.current_user)
+      |> Courses.load_course()
+
+    {:ok, local_time} = DateTime.now("Australia/Perth")
+
+    render(conn, "show.html", journal: journal, local_date: DateTime.to_date(local_time))
   end
 
   def edit(conn, %{"id" => id}) do
